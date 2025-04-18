@@ -8,8 +8,5 @@ This application comprises of three different docker containers:
 All three of these can be created and run with:
 docker compose up --build
 
-There is also a suite of functional tests in their own folder. These can be run by going into the folder and running:
-        `poetry install`
-        `poetry run pytest`
-    at the top level. 
+There is also a suite of functional tests in their own folder. These can be run by going into the folder and running  `poetry install` and `poetry run pytest` at the top level.
 Decisions are in DECISIONS.md

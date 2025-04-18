@@ -21,4 +21,6 @@ Decisions:
         `poetry run pytest`
     
 3. Isolation:
-    - Each container is as independent from the others as possible. 
+    - Each container is as independent from the others as possible. Because of this, they have their own files for poetry.
+    - However, for the sake of a convenient test suite, an addition set of poetry files were added at the root. 
+    - In order for the functional tests to pass, the service must be active.
