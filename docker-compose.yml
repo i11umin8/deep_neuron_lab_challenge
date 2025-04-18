@@ -1,5 +1,3 @@
-# version: '3.9'
-
 services:
   db:
     image: postgres:15
@@ -23,10 +21,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql+asyncpg://caruser:carpass@db/cardb
-    # volumes:
-    #   - ./scraper:/scraper
-    # command: poetry run python scraper.py
-
+    command: poetry run python main.py
   api:
     build:
       context: .
@@ -34,15 +29,13 @@ services:
     container_name: cars-api
     depends_on:
       - scraper
-    # The bug that caused me to put this took like 30 minutes to solve.
-    # Might be my most despised bug I've ever found.
     environment:
+      # The bug that caused me to put this took like 30 minutes to solve.
+      # Might be my most despised bug I've ever found.
       - PYTHONUNBUFFERED=1
       - DATABASE_URL=postgresql+asyncpg://caruser:carpass@db/cardb
     ports:
       - "8000:8000"
-    # volumes:
-      # - ./api:/api
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --lifespan=on
 volumes:
   cars_pgdata:

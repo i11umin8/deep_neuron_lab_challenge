@@ -2,21 +2,22 @@ import asyncio
 from contextlib import asynccontextmanager
 
 from common.db import data_exists
-from typing import TYPE_CHECKING
-
+from common.logger import logger
 @asynccontextmanager
 async def lifespan(app: "FastAPI"):
     max_retries = 30
     delay = 2
+    yield
     for attempt in range(max_retries):
         if await data_exists():
-            print("✅ The data exists! 🚀🚀🚀")
+            logger.info("✅ The data exists! 🚀🚀🚀")
             break
-        print(f"Waiting for data... attempt {attempt + 1}/{max_retries}")
+        logger.info(f"Waiting for data... attempt {attempt + 1}/{max_retries}")
         await asyncio.sleep(delay)
     else:
-        raise RuntimeError("Data did not become available in time. Failing startup.")
-    print("API is up 🚀🚀🚀")
+        logger.error("Data did not become available in time. Failing startup.")
+        raise RuntimeError()
+    logger.info("API is up 🚀🚀🚀")
     yield
     # Optional: teardown logic goes here
-    print("👋 App shutting down.")
+    logger.info("👋 App shutting down.")

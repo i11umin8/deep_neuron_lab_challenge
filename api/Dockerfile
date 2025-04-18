@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 # System deps
 RUN apt-get update && apt-get install -y build-essential
@@ -18,7 +18,3 @@ WORKDIR /app/api
 COPY api/ /app/api
 # common dependencies are in common
 COPY common/ /app/api/common
-
-# Entry point
-# CMD ["python", "api.py"]
-# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--lifespan=on"]

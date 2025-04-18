@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.13-slim
 
 # System deps
 RUN apt-get update && apt-get install -y build-essential
@@ -18,6 +18,3 @@ WORKDIR /app/scraper
 COPY scraper/ /app/scraper
 # common dependencies are in common
 COPY common/ /app/scraper/common
-
-# Entry point
-CMD ["python", "scraper.py"]

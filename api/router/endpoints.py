@@ -1,48 +1,9 @@
-# from fastapi import APIRouter, Depends, HTTPException
-# from sqlalchemy.ext.asyncio import AsyncSession
-# from typing import List
-# from common.db import get_session
-# from schemas.responses import MakeOut, ModelOut, PartOut
-# from services import cars as car_service
-
-
-# router = APIRouter()
-
-# @router.get("/health")
-# def health_check():
-#     return {"status": "ok"}
-
-# @router.get("/makes", response_model=List[MakeOut])
-# async def list_makes(session: AsyncSession = Depends(get_session)):
-#     makes = await car_service.get_all_makes(session)
-#     return makes
-
-# @router.get("/makes/{make_id}/models", response_model=List[ModelOut])
-# async def list_models_for_make(make_id: int, session: AsyncSession = Depends(get_session)):
-#     models = await car_service.get_models_by_make(make_id, session)
-#     if not models:
-#         raise HTTPException(status_code=404, detail="No models found for this make")
-#     return models
-
-# @router.get("/models/{model_id}/parts", response_model=List[PartOut])
-# async def list_parts_for_model(model_id: int, session: AsyncSession = Depends(get_session)):
-#     parts = await car_service.get_parts_by_model(model_id, session)
-#     if not parts:
-#         raise HTTPException(status_code=404, detail="No parts found for this model")
-#     return parts
-
-# @router.get("/parts/{part_id}", response_model=PartOut)
-# async def get_part(part_id: int, session: AsyncSession = Depends(get_session)):
-#     part = await car_service.get_part_by_id(part_id, session)
-#     if not part:
-#         raise HTTPException(status_code=404, detail="Part not found")
-#     return part
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List, Optional
 from common.db import get_session
 from schemas.responses import MakeOut, ModelOut, PartOut
-from services import cars as car_service
+from services import car_service
 
 router = APIRouter()
 
