@@ -1,0 +1,19 @@
+[project]
+name = "deep-neuron-challenge"
+version = "0.1.0"
+description = "A scraping challenge issued by Deep Neuron Labs"
+authors = [
+    {name = "Austin Gamez"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4 (>=4.13.3,<5.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "asyncpg (>=0.30.0,<0.31.0)",
+    "sqlalchemy (>=2.0.40,<3.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

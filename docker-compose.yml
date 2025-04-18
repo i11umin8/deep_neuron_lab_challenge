@@ -1,0 +1,48 @@
+# version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    container_name: cars-db
+    environment:
+      POSTGRES_USER: caruser
+      POSTGRES_PASSWORD: carpass
+      POSTGRES_DB: cardb
+    ports:
+      - "5432:5432"
+    volumes:
+      - cars_pgdata:/var/lib/postgresql/data
+
+  scraper:
+    build:
+      context: .
+      dockerfile: scraper/Dockerfile
+    container_name: cars-scraper
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql+asyncpg://caruser:carpass@db/cardb
+    # volumes:
+    #   - ./scraper:/scraper
+    # command: poetry run python scraper.py
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: cars-api
+    depends_on:
+      - scraper
+    # The bug that caused me to put this took like 30 minutes to solve.
+    # Might be my most despised bug I've ever found.
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DATABASE_URL=postgresql+asyncpg://caruser:carpass@db/cardb
+    ports:
+      - "8000:8000"
+    # volumes:
+      # - ./api:/api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --lifespan=on
+volumes:
+  cars_pgdata:
