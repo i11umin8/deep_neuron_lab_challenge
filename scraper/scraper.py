@@ -28,7 +28,7 @@ class CarDataScraper:
     def extract_link(self, link):
         name = link.text.strip()
         href = link["href"]
-        return name, BASE_URL + href
+        return name, BASE_URL.rstrip("/") + "/" + href.lstrip("/")
 
     async def get_makes(self):
         soup = await self.fetch_html(CATALOGUE_URL)

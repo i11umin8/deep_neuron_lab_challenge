@@ -9,5 +9,7 @@ All three of these can be created and run with:
 docker compose up --build
 
 There is also a suite of functional tests in their own folder. These can be run by going into the folder and running:
-        `poetry run pytest test_api_functional.py`
+        `poetry install`
+        `poetry run pytest`
+    at the top level. 
 Decisions are in DECISIONS.md
